@@ -1,17 +1,29 @@
 from IMF import IMF
-from login import username, password
+from login import password
 
-run = IMF(username, password)
+run = IMF("_a.dvertising_", password)
 
 run.setDonors(
-    'buzova86',
-    'timatiofficial',
-    'instagramru',
-    'tnt_online',
-    'pavelvolyaofficial'
+    'khabib_nurmagomedov',
+    'borodylia',
+    'ververa',
+    '_agentgirl_',
+    'samburskaya ',
+    'egorkreed',
+    'anastasiya_kvitko',
+    'm_galustyan',
+    'annakhilkevich',
+    'urgantcom',
+    'kateclapp',
+    'nagiev.universal',
+    'svetabily',
+    'victoriabonya',
+    'missalena.92',
+    'gusein.gasanov',
+    'xenia_sobchak',
+    'gagara1987',
+    'goar_avetisyan',
+    'maria__way'
 )
 
-run.start_loop(
-    count=1000,
-    delay=30
-)
+run.start_loop(mode=1)

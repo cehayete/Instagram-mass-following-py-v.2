@@ -79,16 +79,66 @@ class IMF:
                 print("You are unfollow {}.".format(user['username']))
                 sleep(delay)
 
-    def start_loop(self, count: int, delay: float):
-        while True:
-            if self.errorPointer >= 2:
-                break
-            self.start_follow(count // len(self.donors), delay)
-            print("Process of following do finished! Process of unfollowing are begin!")
-            self.start_unfollow(count, delay)
-            print("Process of unfollowing do finished! Process of following are begin!")
-        print(
-            "=======================\n"
-            "Error! Please wait a few minutes before you try again.\n"
-            "======================="
-        )
+    def start_loop(self, count = 500, delay = 60, mode = None):
+        if mode is not None:
+            if mode == 0:
+                while True:
+                    if self.errorPointer >= 2:
+                        break
+                    self.start_follow(count // len(self.donors), delay)
+                    print("Process of following do finished! Process of unfollowing are begin!")
+                    self.start_unfollow(count, delay)
+                    print("Process of unfollowing do finished! Process of following are begin!")
+                print(
+                    "=======================\n"
+                    "Error! Please wait a few minutes before you try again.\n"
+                    "======================="
+                )
+            elif mode == 1:
+                num = 1
+                while True:
+                    print('===========\nNum of iteration: {}\n==========='.format(num))
+
+                    if self.errorPointer >= 2:
+                        break
+                    self.follow_to_donors(delay)
+
+                    num += 1
+            else:
+                print(
+                    'Unknown mode!\n'
+                    '"0" - mass following.'
+                    '"1" - follow and unfollow to donors.'
+                )
+        else:
+            print(
+                "You must set mode!"
+                "IMF.start_loop(mode = 0/1(or other value for help))"
+            )
+
+    def follow_to_donors(self, delay: float):
+        if self.donors is not None:
+            if delay > 5:
+                for donor in self.donors:
+                    if donor is not None:
+                        self.API.follow(donor)
+
+                        if self.API.LastJson['status'] == 'fail':
+                            print("Error! Fail of follow! Please wait few minutes.")
+                            self.errorPointer += 1
+                            break
+                        else:
+                            self.errorPointer = 0
+
+                        sleep(5)
+                        self.API.unfollow(donor)
+                        print("OK")
+                        sleep(delay - 5)
+            else:
+                print(
+                    "Error! Delay must been over 5 seconds!"
+                )
+        else:
+            print(
+                "Error! You must sets users-donors! Use IMF.setDonors(\"username1\",\"Username2\"...)"
+            )

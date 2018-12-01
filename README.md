@@ -1,4 +1,4 @@
-# Instagram-mass-following-py v.2.1
+# Instagram-mass-following-py v.2.2
 >В версии 2.2 изменился способ настройки - SETTINGS.py
 
 ###### Как использовать:

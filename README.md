@@ -1,25 +1,20 @@
 # Instagram-mass-following-py v.2.1
->В версии 2.1 появилось возможность выбрать режим:
->**IMF.start_loop(mode=value)**
->mode = 1 - Массфоловинг на подписчиков донеров.
->mode = 2 - Подписка и отписка на донеров.
+>В версии 2.2 изменился способ настройки - SETTINGS.py
 
 ###### Как использовать:
 0. Установить библеотеку **InstagramAPI**. Команда для установки через консоль:
-```
+```bash
 pip install InstagramAPI
 ```
 1. Скачать репозиторий. Команда для установки:
-```
+```bash
 git clone https://github.com/emilastanov/Instagram-mass-following-py-v.2.git
 ```
-2. Создать файл **login.py** в том же каталоге, и поместить в него следующий код:
-```
+2. Открыть файл **SETTINGS.py** и изменить настройки в соответствии с вашими данными:
+```python
 username = "username"
 password = "password"
-```
-3. Отредактировать файл **run.py**:
-```
+
 run.setDonors(
     'username 1',
     'username 2',
@@ -29,6 +24,6 @@ run.setDonors(
 )
 ```
 4. Запустить файл **run.py**. Команда для запуска:
-```
-python run.py
+```bash
+python3 run.py
 ```

@@ -26,7 +26,11 @@ class Parser:
 
     def getJson(self):
         self.getSoup()
-        self.json = json.loads(str(self.soup.find('script').findNext('script').findNext('script').findNext('script').text).replace('window._sharedData = ','').replace(';',''))
+        scripts = self.soup.findAll('script', {'type':'text/javascript'})
+        for script in scripts:
+            if str(script).find('window._sharedData = ') > 0:
+                self.json = json.loads(str(script.text).replace('window._sharedData = ','')[:-1])
+                break
         return self.json
 
     def getImages(self):

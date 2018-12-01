@@ -1,29 +1,33 @@
 from IMF import IMF
-from login import password
+import SETTINGS
 
-run = IMF("_a.dvertising_", password)
 
-run.setDonors(
-    'khabib_nurmagomedov',
-    'borodylia',
-    'ververa',
-    '_agentgirl_',
-    'samburskaya ',
-    'egorkreed',
-    'anastasiya_kvitko',
-    'm_galustyan',
-    'annakhilkevich',
-    'urgantcom',
-    'kateclapp',
-    'nagiev.universal',
-    'svetabily',
-    'victoriabonya',
-    'missalena.92',
-    'gusein.gasanov',
-    'xenia_sobchak',
-    'gagara1987',
-    'goar_avetisyan',
-    'maria__way'
+# Авторизация
+run = IMF(
+    SETTINGS.USERNAME,
+    SETTINGS.PASSWORD
 )
 
-run.start_loop(mode=1)
+# Установка донеров (получение их id)
+run.setDonors(
+    SETTINGS.DONERS
+)
+
+# Запуск цикла подписка отписка
+run.start_loop(
+    mode=SETTINGS.MODE,
+    count=SETTINGS.COUNT,
+    delay=SETTINGS.DELAY
+)
+
+# Подписка на заданное количество пользователей
+# run.start_follow(
+#     count=SETTINGS.COUNT,
+#     delay=SETTINGS.DELAY
+# )
+
+# Отписка от заданного количества пользователей
+# run.start_unfollow(
+#     count=SETTINGS.COUNT,
+#     delay=SETTINGS.DELAY
+# )

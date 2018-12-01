@@ -20,7 +20,7 @@ class IMF:
                 "=================="
             )
 
-    def setDonors(self, *donors: str):
+    def setDonors(self, donors: list):
         donors_list = []
         for donor in donors:
             p = Parser(donor)
@@ -40,19 +40,23 @@ class IMF:
                 if self.debug:
                     print(self.API.LastJson)
 
-                for follower_data in self.API.LastJson['users']:
-                    if c > 0:
-                        self.API.follow(follower_data['pk'])
-                        c -= 1
+                if donor is not None:
+                    for follower_data in self.API.LastJson['users']:
+                        if c > 0:
+                            self.API.follow(follower_data['pk'])
+                            c -= 1
 
-                        if self.API.LastJson['status'] == 'fail':
-                            print("Error! Fail of follow! Please wait few minutes.")
-                            self.errorPointer += 1
-                            break
+                            if self.API.LastJson['status'] == 'fail':
+                                print("Error! Fail of follow! Please wait few minutes.")
+                                self.errorPointer += 1
+                                break
 
-                        self.errorPointer = 0
-                        print("You are follow {}".format(follower_data['username']))
-                        sleep(delay)
+                            self.errorPointer = 0
+                            print("You are follow {}".format(follower_data['username']))
+                            sleep(delay)
+                else:
+                    self.errorPointer += 1
+                    print('Error! Donor id is None.')
         else:
             print(
                 "Error! You must sets users-donors! Use IMF.setDonors(\"username1\",\"Username2\"...)"

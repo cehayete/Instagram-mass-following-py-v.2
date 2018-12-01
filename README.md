@@ -12,16 +12,16 @@ git clone https://github.com/emilastanov/Instagram-mass-following-py-v.2.git
 ```
 2. Открыть файл **SETTINGS.py** и изменить настройки в соответствии с вашими данными:
 ```python
-username = "username"
-password = "password"
+USERNAME = "username"
+PASSWORD = "password"
 
-run.setDonors(
+DONORS = [
     'username 1',
     'username 2',
     'username 3',
     	...
     'username N'
-)
+]
 ```
 4. Запустить файл **run.py**. Команда для запуска:
 ```bash

@@ -5,7 +5,7 @@ from time import sleep
 
 
 def writeLog(log: str):
-    file = open('logs.IMF','a')
+    file = open('./logs.IMF','a')
     file.write(log + "<br>\n")
     file.close()
 

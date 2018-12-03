@@ -4,6 +4,11 @@ from PageParser import Parser
 from time import sleep
 
 
+def writeLog(log: str):
+    file = open('logs.IMF','a')
+    file.write(log + "<br>\n")
+    file.close()
+
 class IMF:
     def __init__(self, username: str, password: str, debug = False):
         self.API = InstagramAPI(username,password)
@@ -19,6 +24,11 @@ class IMF:
                 "Debug mod switch on!\n"
                 "=================="
             )
+            writeLog(
+                "==================\n"
+                "Debug mod switch on!\n"
+                "=================="
+            )
 
     def setDonors(self, donors: list):
         donors_list = []
@@ -28,8 +38,10 @@ class IMF:
         self.donors = donors_list
 
         print("Donors successfully has been setted.")
+        writeLog("Donors successfully has been setted.")
         if self.debug:
             print(self.donors)
+            writeLog(str(self.donors))
 
     def start_follow(self,count: int, delay: float):
         if self.donors is not None:
@@ -39,6 +51,7 @@ class IMF:
                 self.API.getUserFollowers(donor)
                 if self.debug:
                     print(self.API.LastJson)
+                    writeLog(str(self.API.LastJson))
 
                 if donor is not None:
                     for follower_data in self.API.LastJson['users']:
@@ -48,17 +61,23 @@ class IMF:
 
                             if self.API.LastJson['status'] == 'fail':
                                 print("Error! Fail of follow! Please wait few minutes.")
+                                writeLog("Error! Fail of follow! Please wait few minutes.")
                                 self.errorPointer += 1
                                 break
 
                             self.errorPointer = 0
                             print("You are follow {}".format(follower_data['username']))
+                            writeLog("You are follow {}".format(follower_data['username']))
                             sleep(delay)
                 else:
                     self.errorPointer += 1
                     print('Error! Donor id is None.')
+                    writeLog('Error! Donor id is None.')
         else:
             print(
+                "Error! You must sets users-donors! Use IMF.setDonors(\"username1\",\"Username2\"...)"
+            )
+            writeLog(
                 "Error! You must sets users-donors! Use IMF.setDonors(\"username1\",\"Username2\"...)"
             )
 
@@ -68,6 +87,7 @@ class IMF:
         self.API.getSelfUsersFollowing()
         if self.debug:
             print(self.API.LastJson)
+            writeLog(str(self.API.LastJson))
 
         for user in self.API.LastJson['users']:
             if c > 0:
@@ -76,11 +96,13 @@ class IMF:
 
                 if self.API.LastJson['status'] == 'fail':
                     print("Error! Fail of unfollow! Please wait few minutes.")
+                    writeLog("Error! Fail of unfollow! Please wait few minutes.")
                     self.errorPointer += 1
                     break
 
                 self.errorPointer = 0
                 print("You are unfollow {}.".format(user['username']))
+                writeLog("You are unfollow {}.".format(user['username']))
                 sleep(delay)
 
     def start_loop(self, count = 500, delay = 60, mode = None):
@@ -91,9 +113,16 @@ class IMF:
                         break
                     self.start_follow(count // len(self.donors), delay)
                     print("Process of following do finished! Process of unfollowing are begin!")
+                    writeLog("Process of following do finished! Process of unfollowing are begin!")
                     self.start_unfollow(count, delay)
                     print("Process of unfollowing do finished! Process of following are begin!")
+                    writeLog("Process of unfollowing do finished! Process of following are begin!")
                 print(
+                    "=======================\n"
+                    "Error! Please wait a few minutes before you try again.\n"
+                    "======================="
+                )
+                writeLog(
                     "=======================\n"
                     "Error! Please wait a few minutes before you try again.\n"
                     "======================="
@@ -102,6 +131,7 @@ class IMF:
                 num = 1
                 while True:
                     print('===========\nNum of iteration: {}\n==========='.format(num))
+                    writeLog('===========\nNum of iteration: {}\n==========='.format(num))
 
                     if self.errorPointer >= 2:
                         break
@@ -114,8 +144,17 @@ class IMF:
                     '"0" - mass following.'
                     '"1" - follow and unfollow to donors.'
                 )
+                writeLog(
+                    'Unknown mode!\n'
+                    '"0" - mass following.'
+                    '"1" - follow and unfollow to donors.'
+                )
         else:
             print(
+                "You must set mode!"
+                "IMF.start_loop(mode = 0/1(or other value for help))"
+            )
+            writeLog(
                 "You must set mode!"
                 "IMF.start_loop(mode = 0/1(or other value for help))"
             )
@@ -129,6 +168,7 @@ class IMF:
 
                         if self.API.LastJson['status'] == 'fail':
                             print("Error! Fail of follow! Please wait few minutes.")
+                            writeLog("Error! Fail of follow! Please wait few minutes.")
                             self.errorPointer += 1
                             break
                         else:
@@ -137,12 +177,19 @@ class IMF:
                         sleep(5)
                         self.API.unfollow(donor)
                         print("OK")
+                        writeLog("OK")
                         sleep(delay - 5)
             else:
                 print(
                     "Error! Delay must been over 5 seconds!"
                 )
+                writeLog(
+                    "Error! Delay must been over 5 seconds!"
+                )
         else:
             print(
+                "Error! You must sets users-donors! Use IMF.setDonors(\"username1\",\"Username2\"...)"
+            )
+            writeLog(
                 "Error! You must sets users-donors! Use IMF.setDonors(\"username1\",\"Username2\"...)"
             )

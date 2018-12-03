@@ -21,4 +21,7 @@ DONERS = [
     'gusein.gasanov'
 ]
 
+# Файл для логов
+LOGSFILE = "logsfile"
+
 

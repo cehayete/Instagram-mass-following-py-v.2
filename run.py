@@ -8,6 +8,9 @@ run = IMF(
     SETTINGS.PASSWORD
 )
 
+# Назначение файла логов
+run.logsfile = SETTINGS.LOGSFILE
+
 # Установка донеров (получение их id)
 run.setDonors(
     SETTINGS.DONERS

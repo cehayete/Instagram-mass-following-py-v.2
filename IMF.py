@@ -59,6 +59,9 @@ class IMF:
                 if donor is not None:
                     for follower_data in self.API.LastJson['users']:
                         if c > 0:
+                            file = open('followingUsers.imf', 'a')
+                            file.write(follower_data['pk'] + "\n")
+                            file.close()
                             self.API.follow(follower_data['pk'])
                             c -= 1
 
@@ -109,6 +112,23 @@ class IMF:
                 writeLog("You are unfollow {}.".format(user['username']),self.logsfile)
                 sleep(delay)
 
+    def start_unfollow_file(self, delay: float):
+        file = open('followingUsers.imf', 'r')
+        followings = file.readlines()
+        file.close()
+        for following in followings:
+            self.API.unfollow(following.replace('\n',''))
+            if self.API.LastJson['status'] == 'fail':
+                print("Error! Fail of unfollow! Please wait few minutes.")
+                writeLog("Error! Fail of unfollow! Please wait few minutes.", self.logsfile)
+                self.errorPointer += 1
+                break
+
+            self.errorPointer = 0
+            print("You are unfollow {}.".format(following))
+            writeLog("You are unfollow {}.".format(following), self.logsfile)
+            sleep(delay)
+
     def start_loop(self, count = 500, delay = 60, mode = None):
         if mode is not None:
             if mode == 0:
@@ -118,7 +138,7 @@ class IMF:
                     self.start_follow(count // len(self.donors), delay)
                     print("Process of following do finished! Process of unfollowing are begin!")
                     writeLog("Process of following do finished! Process of unfollowing are begin!",self.logsfile)
-                    self.start_unfollow(count, delay)
+                    self.start_unfollow_file(delay)
                     print("Process of unfollowing do finished! Process of following are begin!")
                     writeLog("Process of unfollowing do finished! Process of following are begin!",self.logsfile)
                 print(

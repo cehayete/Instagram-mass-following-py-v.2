@@ -11,7 +11,7 @@ DELAY = 100   # Задержка между подписками (желател
 
 # Донеры (Необходимо сохранять структуру):
 DONERS = [
-    'sayonaraboy'
+    'sayonaraboy',
     '_agentgirl_',
     'samburskaya ',
     'egorkreed',

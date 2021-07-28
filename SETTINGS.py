@@ -11,14 +11,8 @@ DELAY = 100   # Задержка между подписками (желател
 
 # Донеры (Необходимо сохранять структуру):
 DONERS = [
-    'sayonaraboy',
-    '_agentgirl_',
-    'samburskaya ',
-    'egorkreed',
-    'm_galustyan',
-    'urgantcom',
-    'nagiev.universal',
-    'gusein.gasanov'
+    'saldysaputra_',
+    'skyfry_'
 ]
 
 # Файл для логов
